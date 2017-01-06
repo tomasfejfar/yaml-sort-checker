@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<ruleset name="SymfonyProject">
+	<rule ref="vendor/consistence/coding-standard/Consistence/ruleset.xml"/>
+	<rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml">
+		<exclude name="SlevomatCodingStandard.Classes.UnusedPrivateElements"/><!-- attributes with Sentry generated getters are marked as unused -->
+		<exclude name="SlevomatCodingStandard.Namespaces.UseOnlyWhitelistedNamespaces"/> <!-- any namespace can be used in use -->
+		<exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameAfterKeyword"/> <!-- we don't want to have FQCN after extends/implements -->
+	</rule>
+	<rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
+		<properties>
+			<property name="rootNamespaces" type="array" value="
+				src => Mhujer\YamlSortChecker,
+				tests => Mhujer\YamlSortChecker
+			"/>
+			<property name="skipDirs" type="array" value="
+				data,
+				exceptions,
+				fixtures,
+			"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Typehints.TypeHintDeclaration">
+		<properties>
+			<property name="usefulAnnotations" type="array" value="
+				@Route,
+				@dataProvider
+			"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions">
+		<properties>
+			<property name="specialExceptionNames" type="array" value="
+				Throwable,
+			"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
+		<properties>
+			<property name="allowFullyQualifiedExceptions" value="true"/>
+			<property name="allowPartialUses" value="false"/>
+			<property name="fullyQualifiedKeywords" type="array" value="
+			"/>
+			<property name="specialExceptionNames" type="array" value="
+				Throwable,
+			"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
+		<properties>
+			<property name="searchAnnotations" value="true"/>
+		</properties>
+	</rule>
+</ruleset>
