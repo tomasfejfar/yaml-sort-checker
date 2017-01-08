@@ -62,7 +62,7 @@ class CheckCommand extends Command
 			exit(1);
 		} else {
 			$output->writeln('All YAMLs are properly sorted!');
-			exit(1);
+			exit(0);
 		}
 	}
 
