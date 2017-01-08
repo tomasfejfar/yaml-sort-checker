@@ -19,10 +19,7 @@ class CheckCommand extends Command
 	{
 		$output->writeln('#### YAML Sort Checker ####');
 
-		$sortChecker = new SortChecker();
-
 		$configFilePath = realpath('yaml-sort-checker.yml');
-
 		$output->writeln(sprintf('Using config file "%s"', $configFilePath));
 
 		$config = Yaml::parse(file_get_contents($configFilePath));
@@ -37,20 +34,27 @@ class CheckCommand extends Command
 			exit(1);
 		}
 
+		$output->writeln('');
+
 		$isOk = true;
+		$sortChecker = new SortChecker();
 		foreach ($config['files'] as $filename => $options) {
-			$depth = $options['depth'];
+			if (!is_array($options)) {
+				$options = [];
+			}
+
+			$depth = array_key_exists('depth', $options) ? $options['depth'] : 999;
 			$excludedKeys = array_key_exists('excludedKeys', $options) ? $options['excludedKeys'] : [];
 
-			$output->writeln('');
-			$output->writeln(sprintf('Checking "%s":', $filename));
+			$output->write(sprintf('Checking %s: ', $filename));
 			$sortCheckResult = $sortChecker->isSorted($filename, $depth, $excludedKeys);
 
 			if ($sortCheckResult->isOk()) {
 				$output->writeln('OK');
 			} else {
+				$output->writeln('ERROR');
 				foreach ($sortCheckResult->getMessages() as $message) {
-					$output->writeln($message);
+					$output->writeln('  ' . $message);
 				}
 				$isOk = false;
 			}
@@ -58,10 +62,10 @@ class CheckCommand extends Command
 
 		$output->writeln('');
 		if (!$isOk) {
-			$output->writeln('Fix the YAMLs!');
+			$output->writeln('Fix the YAMLs or exclude the keys in the config.');
 			exit(1);
 		} else {
-			$output->writeln('All YAMLs are properly sorted!');
+			$output->writeln('All YAMLs are properly sorted.');
 			exit(0);
 		}
 	}
