@@ -51,6 +51,11 @@ class CheckCommand extends Command
 			$excludedKeys = array_key_exists('excludedKeys', $options) ? $options['excludedKeys'] : [];
 
 			$output->write(sprintf('Checking %s: ', $filename));
+			if (realpath($filename) === false || !is_readable(realpath($filename))) {
+				$output->writeln('NOT READABLE!');
+				exit(1);
+			}
+
 			$sortCheckResult = $sortChecker->isSorted($filename, $depth, $excludedKeys);
 
 			if ($sortCheckResult->isOk()) {
