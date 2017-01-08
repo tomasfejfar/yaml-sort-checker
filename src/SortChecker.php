@@ -7,12 +7,12 @@ use Symfony\Component\Yaml\Yaml;
 class SortChecker
 {
 
-	public function isSorted(string $filename, int $depth): SortCheckResult
+	public function isSorted(string $filename, int $depth, array $excludedKeys = []): SortCheckResult
 	{
 		try {
 			$data = Yaml::parse(file_get_contents($filename));
 
-			$errors = $this->areDataSorted($data, null, $depth);
+			$errors = $this->areDataSorted($data, $excludedKeys, null, $depth);
 
 			return new SortCheckResult($errors);
 
@@ -23,48 +23,49 @@ class SortChecker
 		}
 	}
 
-	private function areDataSorted(array $yamlData, string $parent = null, int $depth): array
+	private function areDataSorted(
+		array $yamlData,
+		array $excludedKeys,
+		string $parent = null,
+		int $depth
+	): array
 	{
 		if ($depth === 0) {
 			return [];
 		}
 
-		$skippedKeys = [
-			'imports',
-			'parameters',
-		];
-
 		$errors = [];
 		$lastKey = null;
 		foreach ($yamlData as $key => $value) {
-			/*if (in_array($key, $skippedKeys, true)) {
-				if (is_array($value)) { // C&P zespodu, RF
-					isSorted($value, ($parent !== null ? $parent . '.' : '') . $key, $depth - 1);
-				}
-				continue;
-			}*/
+			if (!in_array($key, $excludedKeys, true)) { // isn't excluded
 
-			if ($lastKey !== null/* && is_string($lastKey) && is_string($key)*/) {
-				if (strcasecmp($key, $lastKey) < 0) {
-					if ($parent !== null) {
-						$printKey = $parent . '.' . $key;
-						$printLastKey = $parent . '.' . $lastKey;
-					} else {
-						$printKey = $key;
-						$printLastKey = $lastKey;
+				if ($lastKey !== null && is_string($lastKey) && is_string($key)) {
+					if (strcasecmp($key, $lastKey) < 0) {
+						if ($parent !== null) {
+							$printKey = $parent . '.' . $key;
+							$printLastKey = $parent . '.' . $lastKey;
+						} else {
+							$printKey = $key;
+							$printLastKey = $lastKey;
+						}
+						$errors[] = sprintf('"%s" should be before "%s"', $printKey, $printLastKey);
 					}
-					$errors[] = sprintf('"%s" should be before "%s"', $printKey, $printLastKey);
 				}
+				$lastKey = $key;
 			}
-			$lastKey = $key;
+
+			if (array_key_exists($key, $excludedKeys)) {
+				$nextExcludedKeys = $excludedKeys[$key];
+			} else {
+				$nextExcludedKeys = [];
+			}
 
 			if (is_array($value)) {
 				$errors = array_merge(
 					$errors,
-					$this->areDataSorted($value, ($parent !== null ? $parent . '.' : '') . $key, $depth - 1)
+					$this->areDataSorted($value, $nextExcludedKeys, ($parent !== null ? $parent . '.' : '') . $key, $depth - 1)
 				);
 			}
-
 		}
 
 		return $errors;
