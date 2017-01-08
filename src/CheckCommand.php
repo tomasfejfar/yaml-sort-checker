@@ -20,6 +20,10 @@ class CheckCommand extends Command
 		$output->writeln('#### YAML Sort Checker ####');
 
 		$configFilePath = realpath('yaml-sort-checker.yml');
+		if ($configFilePath === false) {
+			$output->writeln(sprintf('Config file "%s" not found!', 'yaml-sort-checker.yml'));
+			exit(1);
+		}
 		$output->writeln(sprintf('Using config file "%s"', $configFilePath));
 
 		$config = Yaml::parse(file_get_contents($configFilePath));
