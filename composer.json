@@ -20,8 +20,8 @@
 	],
 	"require": {
 		"php": "~7.1",
-		"symfony/console": "~3.2",
-		"symfony/yaml": "~3.2"
+		"symfony/console": "~3.1",
+		"symfony/yaml": "~3.1"
 	},
 	"require-dev": {
 		"consistence/coding-standard": "0.12",
