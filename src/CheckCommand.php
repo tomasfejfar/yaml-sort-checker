@@ -24,10 +24,18 @@ class CheckCommand extends Command
 			[
 				'filename' => __DIR__ . '/../tests/fixture/first-level.yml',
 				'depth' => 3,
+				'excludedKeys' => [],
 			],
 			[
 				'filename' => __DIR__ . '/../tests/fixture/first-second-and-third-level.yml',
 				'depth' => 3,
+				'excludedKeys' => [
+					'foo' => [
+						'car' => [
+							'c'
+						],
+					],
+				],
 			],
 		];
 
@@ -39,7 +47,7 @@ class CheckCommand extends Command
 			$output->writeln('');
 			$output->writeln(sprintf('Checking "%s":', $filename));
 
-			$sortCheckResult = $sortChecker->isSorted($filename, $depth);
+			$sortCheckResult = $sortChecker->isSorted($filename, $depth, $fileForChecking['excludedKeys']);
 
 			if ($sortCheckResult->isOk()) {
 				$output->writeln('OK');
