@@ -4,6 +4,7 @@ use Mhujer\YamlSortChecker\CheckCommand;
 use Symfony\Component\Console\Application;
 
 $files = [
+	__DIR__ . '/../../../autoload.php',
 	__DIR__ . '/../../autoload.php',
 	__DIR__ . '/../vendor/autoload.php',
 	__DIR__ . '/vendor/autoload.php',
