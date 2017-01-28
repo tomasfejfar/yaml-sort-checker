@@ -2,9 +2,8 @@
 <ruleset name="SymfonyProject">
 	<rule ref="vendor/consistence/coding-standard/Consistence/ruleset.xml"/>
 	<rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml">
-		<exclude name="SlevomatCodingStandard.Classes.UnusedPrivateElements"/><!-- attributes with Sentry generated getters are marked as unused -->
-		<exclude name="SlevomatCodingStandard.Namespaces.UseOnlyWhitelistedNamespaces"/> <!-- any namespace can be used in use -->
-		<exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameAfterKeyword"/> <!-- we don't want to have FQCN after extends/implements -->
+		<!-- any namespace can be used in use -->
+		<exclude name="SlevomatCodingStandard.Namespaces.UseOnlyWhitelistedNamespaces"/>
 	</rule>
 	<rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
 		<properties>
@@ -19,11 +18,11 @@
 			"/>
 		</properties>
 	</rule>
-	<rule ref="SlevomatCodingStandard.Typehints.TypeHintDeclaration">
+	<rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameAfterKeyword">
 		<properties>
-			<property name="usefulAnnotations" type="array" value="
-				@Route,
-				@dataProvider
+			<property name="keywordsToCheck" type="array" value="
+				T_EXTENDS,
+				T_IMPLEMENTS,
 			"/>
 		</properties>
 	</rule>
@@ -39,15 +38,12 @@
 			<property name="allowFullyQualifiedExceptions" value="true"/>
 			<property name="allowPartialUses" value="false"/>
 			<property name="fullyQualifiedKeywords" type="array" value="
+				T_EXTENDS,
+				T_IMPLEMENTS,
 			"/>
 			<property name="specialExceptionNames" type="array" value="
 				Throwable,
 			"/>
-		</properties>
-	</rule>
-	<rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
-		<properties>
-			<property name="searchAnnotations" value="true"/>
 		</properties>
 	</rule>
 </ruleset>

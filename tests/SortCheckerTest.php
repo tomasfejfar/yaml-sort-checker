@@ -2,9 +2,7 @@
 
 namespace Mhujer\YamlSortChecker;
 
-use PHPUnit\Framework\TestCase;
-
-class SortCheckerTest extends TestCase
+class SortCheckerTest extends \PHPUnit\Framework\TestCase
 {
 
 	public function testSortedFile(): void
