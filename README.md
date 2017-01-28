@@ -31,5 +31,5 @@ Author
 Changelog
 ----------
 
-## 1.0.0 (2017-01-XX)
+## 1.0.0 (2017-01-28)
 - initial release
