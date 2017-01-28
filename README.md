@@ -1,9 +1,8 @@
 # YAML file sort checker [![Build Status](https://travis-ci.org/mhujer/yaml-sort-checker.svg?branch=master)](https://travis-ci.org/mhujer/yaml-sort-checker)
 
-[![Latest Stable Version](https://poser.pugx.org/mhujer/yaml-sort-checker/version.png)](https://packagist.org/packages/mhujer/yaml-sort-checker) [![Total Downloads](https://poser.pugx.org/mhujer/yaml-sort-checker/downloads.png)](https://packagist.org/packages/mhujer/yaml-sort-checker) [![License](https://poser.pugx.org/mhujer/yaml-sort-checker/license.svg)](https://packagist.org/packages/mhujer/yaml-sort-checker) [![Coverage Status](https://coveralls.io/repos/mhujer/yaml-sort-checker/badge.svg?branch=master)](https://coveralls.io/r/mhujer/yaml-sort-checker?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/mhujer/yaml-sort-checker/version.png)](https://packagist.org/packages/mhujer/yaml-sort-checker) [![Total Downloads](https://poser.pugx.org/mhujer/yaml-sort-checker/downloads.png)](https://packagist.org/packages/mhujer/yaml-sort-checker) [![License](https://poser.pugx.org/mhujer/yaml-sort-checker/license.svg)](https://packagist.org/packages/mhujer/yaml-sort-checker)
 
-This library helps you to keep YAML file sorted to prevent unnecessary conflicts
-
+This library helps you to keep YAML file sorted to prevent unnecessary merge conflicts. Typical example is when two developers register a new service in `services.yml`. If they add it to the end, it will lead to a merge conflict. However, when the services are alphabetically sorted, the probability of merge conflict is much lower (because the added services probably won't clash).
 
 Usage
 ----
